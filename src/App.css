@@ -36,3 +36,199 @@
     transform: rotate(360deg);
   }
 }
+/* İlan Kartı Modernizasyonu */
+.listing-card {
+  transition: all 0.3s ease-in-out;
+  border: none !important;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.listing-card:hover {
+  transform: translateY(-10px); /* Yukarı kayma efekti */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+}
+
+.listing-image-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.listing-card img {
+  transition: transform 0.5s ease;
+}
+
+.listing-card:hover img {
+  transform: scale(1.1); /* Resme zoom efekti */
+}
+
+.price-badge {
+  background: #2563eb;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.hover-up:hover {
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.img-zoom:hover {
+    transform: scale(1.1);
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+/* Kartların üzerine gelince hafifçe büyümesi */
+.hover-up:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+}
+
+/* Resimlere zoom efekti */
+.img-zoom:hover {
+    transform: scale(1.1);
+}
+
+/* Butonun üzerine gelince büyümesi */
+.hover-scale:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+/* Sayfa geçiş animasyonu için genel bir klas */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+    animation: fadeIn 0.8s ease-out;
+}
+/* Navbar Genel Yapısı */
+.custom-navbar {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(15px); /* Arkayı bulanıklaştıran cam efekti */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    transition: all 0.3s ease;
+}
+
+/* Logo Yazısı Gradyan Efekti */
+.text-gradient {
+    background: linear-gradient(45deg, #1e293b, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+/* Nav Linkleri */
+.navbar-nav .nav-link {
+    color: #475569 !important;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #3b82f6 !important;
+}
+
+/* Link Altındaki Çizgi Efekti */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 5px;
+    left: 50%;
+    background-color: #3b82f6;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 60%;
+}
+
+/* Çıkış Yap Butonu Özelleştirme */
+.btn-logout {
+    background-color: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #e11d48;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2);
+}
+
+/* Navbar Scroll Olunca Hafif Küçülme Efekti */
+.navbar.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+/* Tüm sayfanın ana arka planı */
+/* Ana Arka Plan: Saf beyaz yerine çok hafif gri-mavi tonu */
+/* Sayfanın tamamı için daha belirgin bir zemin rengi */
+/* src/index.css veya src/App.css içine ekleyin */
+
+/* Tüm sayfanın zeminini açık mavi yapar */
+/* Bu kısım tüm sayfanın zeminini açık mavi yapar */
+/* Sayfa arka planını fark edilebilir bir maviye çekiyoruz */
+body {
+    background-color: #dbeafe !important; /* Daha tok ve belirgin bir açık mavi */
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* App.tsx içindeki sarmalayıcıyı bu renkle dolduruyoruz */
+.app-wrapper {
+    background-color: #dbeafe !important; 
+    min-height: 100vh;
+    /* Hafif bir derinlik katmak için köşelere koyu mavi parıltı ekliyoruz */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.1) 0px, transparent 50%) !important;
+}
+
+/* Navbar: Arka plan mavi olduğu için beyaz navbar şimdi çok daha şık duracak */
+.custom-nav {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-bottom: 2px solid #bfdbfe !important; /* Navbar altına mavi ince bir çizgi */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Kartların (ilanların) mavi zemin üzerinde 'parlaması' için */
+.card {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(37, 99, 235, 0.1) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08) !important;
+}
+
+/* Başlıkların daha net okunması için koyu lacivert tonu */
+h2, .display-6, .logo-text {
+    color: #1e3a8a !important; /* Koyu lacivert */
+}
+/* Sayfa arka planını beyazlıktan kurtaran ana renk */
+.app-wrapper {
+    background-color: #e9ecef !important; /* Bir tık daha belirgin gri-mavi tonu */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(13, 110, 253, 0.1) 0px, transparent 50%), 
+        radial-gradient(at 100% 100%, rgba(13, 110, 253, 0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+}
+
+/* Navbar'ı beyaz tutup arka plandan ayırıyoruz */
+.custom-nav {
+    background-color: #ffffff !important;
+    border-bottom: 2px solid rgba(0, 123, 255, 0.1);
+}
+
