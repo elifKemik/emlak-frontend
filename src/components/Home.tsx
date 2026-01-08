@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ListingCard from './ListingCard'; // Bileşeni import ettik
+import ListingCard from './ListingCard'; 
 
-// Modern CSS Dokunuşları
 const cardStyle = `
   .hero-gradient {
     background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
@@ -51,12 +50,16 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState(''); 
   const navigate = useNavigate();
   
-  // imageUrl eklendi ve virgül hatası düzeltildi
+  // --- YENİ EKLENEN STATE ---
+  const [categories, setCategories] = useState<any[]>([]); 
+  // --------------------------
+
   const [editForm, setEditForm] = useState({
     title: '',
     price: 0,
     locationId: '',
-    imageUrl: '' 
+    imageUrl: '',
+    categoryId: '' // --- DÜZENLEME FORMU İÇİN EKLENDİ ---
   });
 
   const userRole = localStorage.getItem('role');
@@ -75,6 +78,14 @@ const Home = () => {
       });
   };
 
+  // --- KATEGORİLERİ GETİREN FONKSİYON ---
+  const kategorileriGetir = () => {
+    axios.get('http://localhost:3000/categories')
+      .then(res => setCategories(res.data))
+      .catch(err => console.error("Kategori çekme hatası:", err));
+  };
+  // --------------------------------------
+
   const favorileriGetir = () => {
     if (userId && userId !== "undefined") {
       axios.get(`http://localhost:3000/kullanici/${userId}/favoriler`, {
@@ -91,6 +102,7 @@ const Home = () => {
   useEffect(() => {
     ilanlariGetir();
     favorileriGetir();
+    kategorileriGetir(); // --- SAYFA AÇILDIĞINDA ÇALIŞTIR ---
   }, [userId]);
 
   const filtrelenmisIlanlar = ilanlar.filter(ilan => 
@@ -125,8 +137,8 @@ const Home = () => {
     formData.append('title', editForm.title);
     formData.append('price', String(editForm.price));
     formData.append('locationId', editForm.locationId);
+    formData.append('categoryId', editForm.categoryId); // --- KATEGORİ GÜNCELLEME EKLENDİ ---
     
-    // ImgBB linkini Backend'e gönderen kısım
     if (editForm.imageUrl) {
       formData.append('imageUrl', editForm.imageUrl);
     }
@@ -224,6 +236,7 @@ const Home = () => {
               isFavorite={userFavorites.includes(ilan.id)}
               userRole={userRole}
               userId={userId}
+              categories={categories} // --- KATEGORİ LİSTESİ KARTA GÖNDERİLDİ ---
             />
           </div>
         ))}

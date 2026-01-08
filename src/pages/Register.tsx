@@ -37,7 +37,7 @@ const Register = () => {
     <div className="container" style={{ marginTop: '5%' }}>
       <div className="row justify-content-center shadow-lg rounded-5 overflow-hidden bg-white mx-auto" style={{ maxWidth: '900px' }}>
         
-        {/* Sol Taraf: Form */}
+        {}
         <div className="col-md-6 p-5 order-2 order-md-1">
           <div className="text-center mb-4">
             <h2 className="fw-bold text-dark">Kayıt Ol 📝</h2>
@@ -87,7 +87,7 @@ const Register = () => {
             </p>
           </div>
         </div>
-{/* Sağ Taraf: Görsel Kısmını Bu Kodla Güncelle */}
+{}
 <div className="col-md-6 d-none d-md-block p-0 order-1 order-md-2 position-relative">
   <img 
     src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
@@ -96,11 +96,11 @@ const Register = () => {
       width: '100%', 
       height: '100%', 
       objectFit: 'cover',
-      minHeight: '500px' // Görselin görünmesini garantiler
+      minHeight: '500px' 
     }}
   />
   <div className="position-absolute top-0 start-0 p-4 text-white w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center" 
-       style={{ background: 'rgba(0,0,0,0.4)' }}> {/* Glass-effect yerine daha garanti bir karartma */}
+       style={{ background: 'rgba(0,0,0,0.4)' }}> {}
     <h3 className="fw-bold">Yeni Bir Başlangıç</h3>
     <p className="px-3">Hemen kayıt olun ve yüzlerce emlak fırsatını yakalayın.</p>
   </div>

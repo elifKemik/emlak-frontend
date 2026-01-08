@@ -15,12 +15,14 @@ interface ListingCardProps {
   isFavorite: boolean;
   userRole: string | null;
   userId: string | null;
+  categories?: any[];
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
   ilan, editingId, editForm, setEditForm, setEditingId,
   selectedFile, setSelectedFile, guncelle, ilanSil,
-  handleFavoriteToggle, isFavorite, userRole, userId
+  handleFavoriteToggle, isFavorite, userRole, userId,
+  categories = []
 }) => {
   const navigate = useNavigate();
   const isAuthorizedAgent = userRole === 'agent';
@@ -35,6 +37,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
   return (
     <div className="card h-100 shadow-sm card-hover" style={{ borderRadius: '20px' }}>
       
+      {/* Kategori Rozeti (Üst Köşe) */}
+      <div className="position-absolute top-0 start-0 m-3 z-index-1">
+        <span className={`badge rounded-pill px-3 py-2 shadow-sm ${ilan.category?.id === 2 ? 'bg-info' : 'bg-primary'}`}>
+          {ilan.category?.kategori_adi || 'Genel'}
+        </span>
+      </div>
+
       {userRole === 'user' && (
         <div 
           className="position-absolute top-0 end-0 m-3 p-1 rounded-circle bg-white shadow"
@@ -59,7 +68,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
           <div className="p-3 bg-light rounded-4 border shadow-sm">
             <h6 className="fw-bold mb-3 text-primary">İlanı Düzenle</h6>
             
-            {/* SADECE LİNK GİRİŞİ BIRAKILDI */}
             <label className="fw-bold small text-muted mb-1 ms-2">Resim Adresi (URL)</label>
             <input 
               type="text" 
@@ -76,6 +84,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
               value={editForm.title} 
               onChange={(e) => setEditForm({...editForm, title: e.target.value})} 
             />
+            
+            <select 
+              className="form-select rounded-pill mb-2" 
+              value={editForm.categoryId || ''} 
+              onChange={(e) => setEditForm({...editForm, categoryId: e.target.value})}
+            >
+              <option value="">Kategori Seçin...</option>
+              <option value="1">Satılık</option>
+              <option value="2">Kiralık</option>
+            </select>
+
             <input 
               type="number" 
               className="form-control rounded-pill mb-2" 
@@ -114,9 +133,20 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <p className="text-muted small mb-3">
               📍 {ilan.location ? `${ilan.location.city} / ${ilan.location.district}` : 'Konum bilgisi yok'}
             </p>
-            <div className="p-2 bg-light rounded-3 small text-muted border-0 mb-4 px-3">
+
+            {/* Emlakçı Bilgisi Bölümü */}
+            <div className="p-2 bg-light rounded-3 small text-muted border-0 mb-2 px-3">
               👤 <span className="ms-1">{ilan.user?.email || "E-posta Belirtilmemiş"}</span>
             </div>
+
+            {/* --- YENİ: Emlakçı Bilgisinin Altındaki İşlem Türü Alanı --- */}
+            <div className="mb-4 px-1">
+              <span className={`fw-bold small px-3 py-1 rounded-pill ${ilan.category?.id === 2 ? 'bg-info bg-opacity-10 text-info' : 'bg-primary bg-opacity-10 text-primary'}`}>
+                🏷️ {ilan.category?.kategori_adi || (ilan.category?.id === 2 ? 'Kiralık' : 'Satılık')}
+              </span>
+            </div>
+            {/* --------------------------------------------------------- */}
+
             <div className="mt-auto pt-3 border-top">
               {isAuthorizedAgent ? (
                 <div className="d-flex gap-2">
@@ -127,7 +157,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
                         title: ilan.title, 
                         price: Number(ilan.price), 
                         locationId: ilan.location?.id?.toString() || '',
-                        imageUrl: ilan.imageUrl // Mevcut resmi kutuya getirir
+                        imageUrl: ilan.imageUrl,
+                        categoryId: ilan.category?.id?.toString() || '' 
                       }); 
                     }}>✏️ Düzenle</button>
                   <button className="btn btn-outline-danger rounded-circle p-2" style={{width: '40px', height: '40px'}} onClick={() => ilanSil(ilan.id)}>🗑️</button>

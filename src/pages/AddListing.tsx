@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // useEffect eklendi
 import axios from 'axios';
 
 const AddListing = () => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [locationId, setLocationId] = useState('');
-  // Yeni: Dosya yerine URL state'i
   const [imageUrl, setImageUrl] = useState('');
+  
+  // --- YENİ EKLENEN STATELER ---
+  const [categories, setCategories] = useState<any[]>([]); // Kategorileri listelemek için
+  const [categoryId, setCategoryId] = useState(''); // Seçilen kategori ID'si
+  // -----------------------------
 
-  // KRİTİK: Backend URL'ini buraya tanımlıyoruz
   const API_URL = 'http://localhost:3000';
+
+  // --- KATEGORİLERİ BACKEND'DEN ÇEKME ---
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/categories`);
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Kategoriler yüklenirken hata oluştu:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+  // --------------------------------------
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,9 +41,9 @@ const AddListing = () => {
     formData.append('title', title);
     formData.append('price', price);
     formData.append('locationId', locationId);
+    formData.append('categoryId', categoryId); // --- KATEGORİ EKLENDİ ---
     formData.append('userId', storedUserId);
     
-    // Yeni: Image URL'i FormData'ya ekliyoruz
     if (imageUrl) {
       formData.append('imageUrl', imageUrl);
     }
@@ -40,7 +57,7 @@ const AddListing = () => {
       });
       alert("İlan başarıyla eklendi! ✅");
       // Formu temizle
-      setTitle(''); setPrice(''); setLocationId(''); setImageUrl('');
+      setTitle(''); setPrice(''); setLocationId(''); setImageUrl(''); setCategoryId('');
     } catch (error: any) {
       console.error("Hata detayı:", error);
       const errorMsg = error.response?.data?.message || "İlan eklenirken bir hata oluştu.";
@@ -73,6 +90,20 @@ const AddListing = () => {
                 <label className="fw-bold small ms-2 text-primary">İlan Başlığı</label>
                 <input type="text" className="form-control form-control-lg rounded-4 bg-light border-0 shadow-sm" placeholder="Beşiktaş'ta Lüks Daire" value={title} onChange={(e) => setTitle(e.target.value)} required />
               </div>
+
+              {/* --- KATEGORİ SEÇİM ALANI (YENİ) --- */}
+              <div className="mb-3">
+                <label className="fw-bold small ms-2 text-primary">Kategori (Satılık/Kiralık)</label>
+                <select className="form-select form-select-lg rounded-4 bg-light border-0 shadow-sm" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+                  <option value="">İlan türünü seçin...</option>
+                  {categories.map((cat: any) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.kategori_adi || cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* ---------------------------------- */}
               
               <div className="mb-3">
                 <label className="fw-bold small ms-2 text-primary">Fiyat (TL)</label>
@@ -91,7 +122,6 @@ const AddListing = () => {
                 </select>
               </div>
 
-              {/* GÜNCELLENEN KISIM: Fotoğraf Yükle yerine Fotoğraf Linki */}
               <div className="mb-4">
                 <label className="fw-bold small ms-2 text-primary">Fotoğraf Linki (URL)</label>
                 <div className="p-3 border-2 border-dashed rounded-4 bg-light text-center position-relative">

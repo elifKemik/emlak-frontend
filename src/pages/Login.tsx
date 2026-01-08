@@ -30,7 +30,7 @@ const Login = () => {
   return (
     <div className="container" style={{ marginTop: '5%' }}>
       <div className="row justify-content-center shadow-lg rounded-5 overflow-hidden bg-white mx-auto" style={{ maxWidth: '900px' }}>
-        {/* Sol Taraf: Görsel */}
+        {}
         <div className="col-md-6 d-none d-md-block p-0 position-relative">
           <img 
             src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
@@ -43,7 +43,7 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Sağ Taraf: Form */}
+        {}
         <div className="col-md-6 p-5">
           <div className="text-center mb-4">
             <h2 className="fw-bold text-dark">Giriş Yap 👋</h2>
